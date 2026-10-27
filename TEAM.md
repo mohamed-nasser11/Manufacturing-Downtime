@@ -1,27 +1,10 @@
-<div align="center">
+# Team Members
 
-# 👥 Project Team
+**Manufacturing Downtime**
 
-**Manufacturing Downtime Analysis & Forecasting**
-
-</div>
-
----
-
-## Team Members
-
-| # | Name | Role | GitHub | LinkedIn |
-|:-:|------|------|--------|----------|
-| 1 | *To be added* | — | — | — |
-| 2 | *To be added* | — | — | — |
-| 3 | *To be added* | — | — | — |
-| 4 | *To be added* | — | — | — |
-| 5 | *To be added* | — | — | — |
-
----
-
-<div align="center">
-
-[⬅ Back to README](README.md)
-
-</div>
+| # | Name | Role |
+|:-:|------|------|
+| 1 | Mohamed Nasser Desoky | Team Leader |
+| 2 | Salma Tamer Mohamed | Member |
+| 3 | | Member |
+| 4 | | Member |
