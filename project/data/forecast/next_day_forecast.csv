@@ -1,0 +1,7 @@
+Forecast_Date,ProductID,Flavor,Size,Min_Batch_Time,Expected_Downtime_Per_Batch,Expected_Cycle_Min,Available_Min,Planned_Batches,Batches_If_No_Downtime,Expected_Downtime_Day,Method
+2024-09-04,OR-600,Orange,600 ml,60,36.5,96.5,1440,14,24,511,Overall average
+2024-09-04,LE-600,Lemon Lime,600 ml,60,36.5,96.5,1440,14,24,511,Overall average
+2024-09-04,CO-600,Cola,600 ml,60,36.5,96.5,1440,14,24,511,Overall average
+2024-09-04,DC-600,Diet Cola,600 ml,60,36.5,96.5,1440,14,24,511,Overall average
+2024-09-04,RB-600,Root Beer,600 ml,60,36.5,96.5,1440,14,24,511,Overall average
+2024-09-04,CO-2L,Cola,2 L,98,36.5,134.5,1440,10,14,365,Overall average

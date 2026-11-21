@@ -1,0 +1,4 @@
+Method,MAE_Minutes
+Overall average,19.06
+Product average (baseline),20.74
+Regression (product + operator + shift),20.78
