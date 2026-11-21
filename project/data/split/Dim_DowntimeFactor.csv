@@ -1,0 +1,13 @@
+FactorID,Description,Operator_Error,Factor_Category
+1,Emergency stop,No,Machine
+2,Batch change,Yes,Human
+3,Labeling error,No,Machine
+4,Inventory shortage,No,Material
+5,Product spill,Yes,Human
+6,Machine adjustment,Yes,Human
+7,Machine failure,No,Machine
+8,Batch coding error,Yes,Human
+9,Conveyor belt jam,No,Machine
+10,Calibration error,Yes,Human
+11,Label switch,Yes,Human
+12,Other,No,Other
