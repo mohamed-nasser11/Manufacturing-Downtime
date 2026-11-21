@@ -31,7 +31,10 @@ pip install -r requirements.txt
 python scripts/01_split_data.py         # Excel -> 6 CSVs in data/split
 python scripts/02_clean_data.py         # cleaned CSVs in data/clean
 python scripts/03_build_sql_inserts.py  # rebuilds sql/03_insert_data.sql
+python scripts/04_forecast.py           # next-day forecast + sql/07_forecast_table.sql
 ```
+
+Notebooks (open from `project/notebooks`): `01_exploratory_analysis.ipynb` (charts and analysis) and `02_forecast.ipynb` (forecast results).
 
 **2. SQL Server (in SSMS, connected to `localhost`)**
 
@@ -45,3 +48,4 @@ Open and execute the files in `project/sql` in order:
 | `04_create_relationships.sql` | Adds the one-to-many relationships |
 | `05_check_data.sql` | Checks row counts, totals and relationships |
 | `06_analysis_questions.sql` | Answers the analysis questions |
+| `07_forecast_table.sql` | Loads the next-day forecast table |
