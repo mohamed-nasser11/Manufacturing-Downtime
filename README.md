@@ -20,3 +20,28 @@ The work is built with **SQL** and **Python** (pandas, scikit-learn, Matplotlib)
 | **2. Exploratory Analysis** | Define all possible analysis questions that can be deduced from the dataset and are of interest to the organization's decision makers. | SQL, Python (pandas, Matplotlib) | Set of analysis questions answerable via the dataset |
 | **3. Forecasting** | Define and answer forecasting questions using the trends in the dataset, including the prediction of next-day downtime and, accordingly, the number of batches to be produced. | Python (scikit-learn, pandas, Matplotlib) | Visualization plots answering the forecasting questions |
 | **4. Dashboard & Reporting** | Build a dashboard that visualizes the answers to all questions, and prepare a report and presentation covering data analysis, model development, and deployment. | SQL, Python (pandas, Matplotlib), Power BI | Power BI dashboard · Final report and presentation |
+
+## How to Run
+
+**1. Python (split and clean the data)**
+
+```bash
+cd project
+pip install -r requirements.txt
+python scripts/01_split_data.py         # Excel -> 6 CSVs in data/split
+python scripts/02_clean_data.py         # cleaned CSVs in data/clean
+python scripts/03_build_sql_inserts.py  # rebuilds sql/03_insert_data.sql
+```
+
+**2. SQL Server (in SSMS, connected to `localhost`)**
+
+Open and execute the files in `project/sql` in order:
+
+| Script | What it does |
+|--------|--------------|
+| `01_create_database.sql` | Creates the `ManufacturingDowntime` database |
+| `02_create_tables.sql` | Creates the 6 star schema tables |
+| `03_insert_data.sql` | Loads the clean data |
+| `04_create_relationships.sql` | Adds the one-to-many relationships |
+| `05_check_data.sql` | Checks row counts, totals and relationships |
+| `06_analysis_questions.sql` | Answers the analysis questions |
