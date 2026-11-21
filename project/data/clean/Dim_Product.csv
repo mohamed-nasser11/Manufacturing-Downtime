@@ -1,0 +1,7 @@
+ProductID,Flavor,Size,Size_ml,Min_Batch_Time
+OR-600,Orange,600 ml,600,60
+LE-600,Lemon Lime,600 ml,600,60
+CO-600,Cola,600 ml,600,60
+DC-600,Diet Cola,600 ml,600,60
+RB-600,Root Beer,600 ml,600,60
+CO-2L,Cola,2 L,2000,98
