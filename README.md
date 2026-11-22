@@ -29,12 +29,14 @@ The work is built with **SQL** and **Python** (pandas, scikit-learn, Matplotlib)
 cd project
 pip install -r requirements.txt
 python scripts/01_split_data.py         # Excel -> 6 CSVs in data/split
-python scripts/02_clean_data.py         # cleaned CSVs in data/clean
+jupyter nbconvert --to notebook --execute --inplace scripts/02_clean_data.ipynb  # cleaned CSVs in data/clean
 python scripts/03_build_sql_inserts.py  # rebuilds sql/03_insert_data.sql
-python scripts/04_forecast.py           # next-day forecast + sql/07_forecast_table.sql
+python scripts/04_forecast.py           # next-day forecasts + sql/07_forecast_table.sql
 ```
 
-Notebooks (open from `project/notebooks`): `01_exploratory_analysis.ipynb` (charts and analysis) and `02_forecast.ipynb` (forecast results).
+The cleaning step is a notebook, so it can also be opened in Jupyter or VS Code and run with *Run All*.
+
+Notebooks (open from `project/notebooks`): `01_exploratory_analysis.ipynb` (charts and analysis) and `02_forecast.ipynb` (answers to the forecasting questions).
 
 **2. SQL Server (in SSMS, connected to `localhost`)**
 

@@ -1,0 +1,12 @@
+Forecast_Date,Planned_Product,Description,Factor_Category,Expected_Min_Per_Batch,Expected_Min_Next_Day
+2024-09-04,CO-600,Machine adjustment,Human,8.74,122
+2024-09-04,CO-600,Machine failure,Machine,6.68,94
+2024-09-04,CO-600,Inventory shortage,Material,5.92,83
+2024-09-04,CO-600,Batch change,Human,4.21,59
+2024-09-04,CO-600,Batch coding error,Human,3.82,53
+2024-09-04,CO-600,Other,Other,1.95,27
+2024-09-04,CO-600,Product spill,Human,1.5,21
+2024-09-04,CO-600,Calibration error,Human,1.29,18
+2024-09-04,CO-600,Labeling error,Machine,1.11,16
+2024-09-04,CO-600,Label switch,Human,0.87,12
+2024-09-04,CO-600,Conveyor belt jam,Machine,0.45,6

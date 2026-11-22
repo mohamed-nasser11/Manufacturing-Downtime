@@ -9,11 +9,17 @@ Step 4: Forecast next-day downtime and the number of batches.
    the method with the lowest error is used.
 2. For each product:
        batches = available minutes / (min batch time + expected downtime)
+3. Which downtime causes are expected to cost the most minutes tomorrow.
+4. How many batches the line can make if each operator runs it tomorrow.
 
 Outputs
     data/forecast/model_comparison.csv
     data/forecast/next_day_forecast.csv
+    data/forecast/next_day_downtime_by_cause.csv
+    data/forecast/next_day_batches_by_operator.csv
     reports/figures/06_forecast_batches.png
+    reports/figures/07_forecast_by_cause.png
+    reports/figures/08_forecast_by_operator.png
     sql/07_forecast_table.sql   (loads the forecast into SQL Server)
 
 Run from the project folder:  python scripts/04_forecast.py
@@ -153,7 +159,62 @@ def main():
     fig.tight_layout()
     fig.savefig(FIGURES / "06_forecast_batches.png", dpi=150)
 
-    # ---------- 4. SQL script ----------
+    # ---------- 4. which causes will cost the most tomorrow? ----------
+    downtime = pd.read_csv(DATA / "Fact_Downtime.csv")
+    factors = pd.read_csv(DATA / "Dim_DowntimeFactor.csv")
+    main_product = df["ProductID"].value_counts().idxmax()
+    main_plan = forecast.set_index("ProductID").loc[main_product, "Planned_Batches"]
+    by_cause = (downtime.merge(factors, on="FactorID")
+                .groupby(["Description", "Factor_Category"])["Downtime_Minutes"].sum()
+                .reset_index())
+    by_cause["Expected_Min_Per_Batch"] = (by_cause["Downtime_Minutes"] / len(df)).round(2)
+    by_cause["Expected_Min_Next_Day"] = (by_cause["Expected_Min_Per_Batch"]
+                                         * main_plan).round(0).astype(int)
+    by_cause = (by_cause.drop(columns="Downtime_Minutes")
+                .sort_values("Expected_Min_Next_Day", ascending=False))
+    by_cause.insert(0, "Forecast_Date", next_day.date())
+    by_cause.insert(1, "Planned_Product", main_product)
+    by_cause.to_csv(OUT_DIR / "next_day_downtime_by_cause.csv", index=False)
+    print(f"\nExpected downtime by cause ({main_plan} batches of {main_product}):")
+    print(by_cause[["Description", "Expected_Min_Next_Day"]].to_string(index=False))
+
+    fig, ax = plt.subplots(figsize=(9, 4.2))
+    plot = by_cause.iloc[::-1]
+    ax.barh(plot["Description"], plot["Expected_Min_Next_Day"], color="#1f4e79")
+    ax.set_xlabel("Expected downtime minutes")
+    ax.set_title(f"Expected downtime by cause on {next_day:%d %b %Y} "
+                 f"({main_plan} batches of {main_product})")
+    ax.spines[["top", "right"]].set_visible(False)
+    fig.tight_layout()
+    fig.savefig(FIGURES / "07_forecast_by_cause.png", dpi=150)
+
+    # ---------- 5. how many batches if each operator runs the line? ----------
+    min_time = forecast.set_index("ProductID").loc[main_product, "Min_Batch_Time"]
+    by_operator = (df.groupby(["Operator_Name", "Shift"])[TARGET].mean()
+                   .round(1).rename("Expected_Downtime_Per_Batch").reset_index())
+    by_operator["Expected_Cycle_Min"] = min_time + by_operator["Expected_Downtime_Per_Batch"]
+    by_operator["Planned_Batches"] = np.floor(
+        AVAILABLE_MINUTES / by_operator["Expected_Cycle_Min"]).astype(int)
+    by_operator = by_operator.sort_values("Planned_Batches", ascending=False)
+    by_operator.insert(0, "Forecast_Date", next_day.date())
+    by_operator.insert(1, "Planned_Product", main_product)
+    by_operator.to_csv(OUT_DIR / "next_day_batches_by_operator.csv", index=False)
+    print(f"\nBatches of {main_product} if each operator runs the line:")
+    print(by_operator[["Operator_Name", "Expected_Downtime_Per_Batch",
+                       "Planned_Batches"]].to_string(index=False))
+
+    fig, ax = plt.subplots(figsize=(9, 4.2))
+    bars = ax.bar(by_operator["Operator_Name"], by_operator["Planned_Batches"],
+                  color="#1f4e79")
+    ax.bar_label(bars, padding=3)
+    ax.set_ylabel("Batches per day")
+    ax.set_title(f"Expected batches of {main_product} by operator ({next_day:%d %b %Y}, 24 h)")
+    ax.set_ylim(0, by_operator["Planned_Batches"].max() * 1.2)
+    ax.spines[["top", "right"]].set_visible(False)
+    fig.tight_layout()
+    fig.savefig(FIGURES / "08_forecast_by_operator.png", dpi=150)
+
+    # ---------- 6. SQL script ----------
     def q(v):
         return "'" + str(v).replace("'", "''") + "'"
     values = ",\n".join(

@@ -1,0 +1,5 @@
+Forecast_Date,Planned_Product,Operator_Name,Shift,Expected_Downtime_Per_Batch,Expected_Cycle_Min,Planned_Batches
+2024-09-04,CO-600,Charlie,Evening,34.9,94.9,15
+2024-09-04,CO-600,Dee,Morning,33.6,93.6,15
+2024-09-04,CO-600,Dennis,Morning,37.8,97.8,14
+2024-09-04,CO-600,Mac,Evening,41.5,101.5,14
